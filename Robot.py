@@ -63,29 +63,25 @@ class Robot:
 
 
 def game():
-    robot = Robot(finish_x=0, finish_y=0)
+    robot = Robot(finish_x=0, finish_y=-546)
     print(f'My starting coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')
     print(f'I need to reach the coordinates: {robot.coordinate_finish}')
     while robot.coordinate_finish != robot.get_self_coordinate:
 
-        while robot.get_self_coordinate[0] != robot.coordinate_finish[0]:
-            if robot.get_self_coordinate[0] > robot.coordinate_finish[0]:
-                while robot.get_direction != Direction.LEFT:
-                    robot.turn_left()
-            else:
-                while robot.get_direction != Direction.RIGHT:
-                    robot.turn_left()
-            robot.step_forward()
+        self_variable = robot.position_x if robot.position_x != robot.finish_x else robot.position_y
+        finish_variable = robot.finish_x if robot.position_y != robot.finish_y else robot.finish_y
+        direction_x = Direction.LEFT if robot.position_x > robot.finish_x else Direction.RIGHT
+        direction_y = Direction.DOWN if robot.position_y > robot.finish_y else Direction.UP
+        direction_variable = direction_x if robot.position_x != robot.finish_x else direction_y
 
-        while robot.get_self_coordinate[1] != robot.coordinate_finish[1]:
-            if robot.get_self_coordinate[1] > robot.coordinate_finish[1]:
-                while robot.get_direction != Direction.DOWN:
-                    robot.turn_left()
-            else:
-                while robot.get_direction != Direction.UP:
-                    robot.turn_left()
-            robot.step_forward()
+        if self_variable > finish_variable:
+            while robot.get_direction != direction_variable:
+                robot.turn_left()
+        else:
+            while robot.get_direction != direction_variable:
+                robot.turn_left()
+        robot.step_forward()
 
     print(f'My coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')

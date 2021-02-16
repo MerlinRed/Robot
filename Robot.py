@@ -31,7 +31,7 @@ class Robot:
     def get_self_coordinate(self):
         return self.position_x, self.position_y
 
-    def turn_left(self):
+    def turn_self(self):
         if self.direction == Direction.UP:
             self.direction = Direction.LEFT
         elif self.direction == Direction.LEFT:
@@ -39,16 +39,6 @@ class Robot:
         elif self.direction == Direction.DOWN:
             self.direction = Direction.RIGHT
         elif self.direction == Direction.RIGHT:
-            self.direction = Direction.UP
-
-    def turn_right(self):
-        if self.direction == Direction.UP:
-            self.direction = Direction.RIGHT
-        elif self.direction == Direction.RIGHT:
-            self.direction = Direction.DOWN
-        elif self.direction == Direction.DOWN:
-            self.direction = Direction.LEFT
-        elif self.direction == Direction.LEFT:
             self.direction = Direction.UP
 
     def step_forward(self):
@@ -77,10 +67,10 @@ def game():
 
         if self_variable > finish_variable:
             while robot.get_direction != direction_variable:
-                robot.turn_left()
+                robot.turn_self()
         else:
             while robot.get_direction != direction_variable:
-                robot.turn_left()
+                robot.turn_self()
         robot.step_forward()
 
     print(f'My coordinates: {robot.get_self_coordinate}')

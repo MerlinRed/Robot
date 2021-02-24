@@ -73,7 +73,6 @@ def game():
                 robot.turn_self()
         robot.step_forward()
 
-    print(f'My coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')
     print(f'Finish coordinates: {robot.coordinate_finish}')
 
@@ -81,4 +80,4 @@ def game():
 start = default_timer()
 game()
 finish = default_timer()
-print(f'I walked for {finish - start} seconds')
+print(f'I walked for {finish - start: 2f} seconds')

@@ -13,11 +13,13 @@ class Direction(Enum):
 class Robot:
 
     def __init__(self, finish_x, finish_y):
-        self.position_x = choice([x for x in range(-100, 100 + 1)])
-        self.position_y = choice([y for y in range(-100, 100 + 1)])
+        self.position_x = choice([x for x in range(-1000, 1000 + 1)])
+        self.position_y = choice([y for y in range(-1000, 1000 + 1)])
         self.direction = choice(list(Direction))
-        self.finish_x = int(finish_x)
-        self.finish_y = int(finish_y)
+        assert isinstance(finish_x, int)
+        assert isinstance(finish_y, int)
+        self.finish_x = finish_x
+        self.finish_y = finish_y
 
     @property
     def coordinate_finish(self):
@@ -52,8 +54,8 @@ class Robot:
             self.position_x += 1
 
 
-def game():
-    robot = Robot(finish_x=0, finish_y=-546)
+def game(*, finish_x, finish_y):
+    robot = Robot(finish_x=finish_x, finish_y=-finish_y)
     print(f'My starting coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')
     print(f'I need to reach the coordinates: {robot.coordinate_finish}')
@@ -78,6 +80,6 @@ def game():
 
 
 start = default_timer()
-game()
+game(finish_x=1500, finish_y=-1500)
 finish = default_timer()
 print(f'I walked for {finish - start: 2f} seconds')

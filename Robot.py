@@ -13,11 +13,13 @@ class Direction(Enum):
 class Robot:
 
     def __init__(self, finish_x, finish_y):
-        self.position_x = choice([x for x in range(-100, 100 + 1)])
-        self.position_y = choice([y for y in range(-100, 100 + 1)])
+        self.position_x = choice([x for x in range(-1000, 1000 + 1)])
+        self.position_y = choice([y for y in range(-1000, 1000 + 1)])
         self.direction = choice(list(Direction))
-        self.finish_x = int(finish_x)
-        self.finish_y = int(finish_y)
+        assert isinstance(finish_x, int)
+        assert isinstance(finish_y, int)
+        self.finish_x = finish_x
+        self.finish_y = finish_y
 
     @property
     def coordinate_finish(self):
@@ -31,7 +33,7 @@ class Robot:
     def get_self_coordinate(self):
         return self.position_x, self.position_y
 
-    def turn_left(self):
+    def turn_self(self):
         if self.direction == Direction.UP:
             self.direction = Direction.LEFT
         elif self.direction == Direction.LEFT:
@@ -39,16 +41,6 @@ class Robot:
         elif self.direction == Direction.DOWN:
             self.direction = Direction.RIGHT
         elif self.direction == Direction.RIGHT:
-            self.direction = Direction.UP
-
-    def turn_right(self):
-        if self.direction == Direction.UP:
-            self.direction = Direction.RIGHT
-        elif self.direction == Direction.RIGHT:
-            self.direction = Direction.DOWN
-        elif self.direction == Direction.DOWN:
-            self.direction = Direction.LEFT
-        elif self.direction == Direction.LEFT:
             self.direction = Direction.UP
 
     def step_forward(self):
@@ -62,8 +54,8 @@ class Robot:
             self.position_x += 1
 
 
-def game():
-    robot = Robot(finish_x=0, finish_y=-546)
+def game(*, finish_x, finish_y):
+    robot = Robot(finish_x=finish_x, finish_y=-finish_y)
     print(f'My starting coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')
     print(f'I need to reach the coordinates: {robot.coordinate_finish}')
@@ -77,18 +69,17 @@ def game():
 
         if self_variable > finish_variable:
             while robot.get_direction != direction_variable:
-                robot.turn_left()
+                robot.turn_self()
         else:
             while robot.get_direction != direction_variable:
-                robot.turn_left()
+                robot.turn_self()
         robot.step_forward()
 
-    print(f'My coordinates: {robot.get_self_coordinate}')
     print(f'I look {robot.get_direction}')
     print(f'Finish coordinates: {robot.coordinate_finish}')
 
 
 start = default_timer()
-game()
+game(finish_x=1500, finish_y=-1500)
 finish = default_timer()
-print(f'I walked for {finish - start} seconds')
+print(f'I walked for {finish - start: 2f} seconds')
